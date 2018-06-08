@@ -1,0 +1,38 @@
+{
+  "name": "koa_server",
+  "version": "1.0.0",
+  "description": "koa based web server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js | bunyan",
+    "lint": "eslint **/*.js --ignore-path .gitignore --ignore-pattern internals/scripts",
+    "test": "NODE_ENV=test mocha"
+  },
+  "keywords": [
+    "koa",
+    "eslint"
+  ],
+  "author": "cxwcfea",
+  "license": "ISC",
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "dotenv-safe": "^5.0.1",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compress": "^3.0.0",
+    "koa-router": "^7.4.0",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.17.5",
+    "supertest": "^3.1.0"
+  }
+}
