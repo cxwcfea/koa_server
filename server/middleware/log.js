@@ -1,3 +1,5 @@
+const { asValue } = require('awilix');
+
 function reqSerializer(ctx = {}) {
   return {
     method: ctx.method,
@@ -30,6 +32,11 @@ module.exports = (options = {}) => {
   return async function log(ctx, next) {
     const startTime = new Date();
     ctx.log = logger.child({ reqId: ctx.reqId });
+
+    ctx.state.container.register({
+      logger: asValue(ctx.log),
+    });
+
     ctx.log.addSerializers({
       req: reqSerializer,
       res: resSerializer,

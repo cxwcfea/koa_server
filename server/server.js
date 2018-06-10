@@ -2,7 +2,11 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const compress = require('koa-compress');
 const bodyParser = require('koa-bodyparser');
+const cors = require('kcors');
+const { scopePerRequest } = require('awilix-koa');
 
+const { REQUEST_ID_HEADER } = require('./constants');
+const diContainer = require('./utils/di');
 const errorHandler = require('./middleware/errorHandler');
 const log = require('./middleware/log');
 const logger = require('./utils/logger');
@@ -21,6 +25,8 @@ app.use(bodyParser({
 }));
 app.use(compress());
 app.use(requestId());
+app.use(cors({ exposeHeaders: [REQUEST_ID_HEADER] }));
+app.use(scopePerRequest(diContainer));
 app.use(errorHandler());
 app.use(log({ logger }));
 

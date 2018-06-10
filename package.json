@@ -18,8 +18,11 @@
     "node": ">= 8.0.0"
   },
   "dependencies": {
+    "awilix": "^3.0.8",
+    "awilix-koa": "^2.1.1",
     "bunyan": "^1.8.12",
     "dotenv-safe": "^5.0.1",
+    "kcors": "^2.2.1",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-compress": "^3.0.0",

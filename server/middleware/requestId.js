@@ -1,8 +1,10 @@
 const uuidV4 = require('uuid/v4');
 
+const { REQUEST_ID_HEADER } = require('../constants');
+
 module.exports = (options = {}) => {
   const {
-    header = 'X-Request-Id',
+    header = REQUEST_ID_HEADER,
     propertyName = 'reqId',
     generator = uuidV4,
   } = options;

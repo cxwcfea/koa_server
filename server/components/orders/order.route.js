@@ -1,10 +1,13 @@
+const { makeClassInvoker } = require('awilix-koa');
 const Router = require('koa-router');
 const controller = require('./order.controller');
 
-const router = new Router({ prefix: '/api/orders' });
 
 module.exports = (app) => {
-  router.get('/', controller.list);
+  const router = new Router({ prefix: '/api/orders' });
+  const api = makeClassInvoker(controller);
+
+  router.get('/', api('list'));
 
   app.use(router.routes()).use(router.allowedMethods());
 };
