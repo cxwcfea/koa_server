@@ -31,7 +31,7 @@ module.exports = (options = {}) => {
 
   return async function log(ctx, next) {
     const startTime = new Date();
-    ctx.log = logger.child({ reqId: ctx.reqId });
+    ctx.log = logger.child({ reqId: ctx.state.reqId });
 
     ctx.state.container.register({
       logger: asValue(ctx.log),
@@ -49,7 +49,7 @@ module.exports = (options = {}) => {
     } catch (err) {
       ctx.log.error(
         { err, event: 'error' },
-        `Unhandled exception occured on the request: ${ctx.reqId}`,
+        `Unhandled exception occured on the request: ${ctx.state.reqId}`,
       );
       throw err;
     }

@@ -11,7 +11,7 @@ module.exports = (options = {}) => {
 
   return async function requestId(ctx, next) {
     const reqId = ctx.request.get(header) || generator();
-    ctx[propertyName] = reqId;
+    ctx.state[propertyName] = reqId;
     ctx.set(header, reqId);
     await next();
   };
