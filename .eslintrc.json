@@ -12,7 +12,8 @@
     "arrow-parens": [
       "error",
       "always"
-    ]
+    ],
+    "import/no-dynamic-require": "off"
   },
   "env": {
     "node": true,
