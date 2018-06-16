@@ -12,44 +12,14 @@ class AuthController {
   }
 
   async register(ctx) {
-    const schema = {
-      name: this.validator
-        .string()
-        .trim()
-        .min(3)
-        .max(32)
-        .required(),
-      password: this.validator.string().min(8).max(32).required(),
-    };
-    const { error, value } = this.validator.validate(ctx.request.body, schema);
-    if (error) {
-      const message = this.utils
-        .getErrorMessage(error.details[0].path[0], error.details[0].message);
-      ctx.throw(400, message, { code: 'auth:param_error' });
-    }
-
-    const token = await this.authService.register(value.name, value.password);
+    const token =
+      await this.authService.register(ctx.state.reqParams.name, ctx.state.reqParams.password);
     ctx.body = { token };
   }
 
   async login(ctx) {
-    const schema = {
-      name: this.validator
-        .string()
-        .trim()
-        .min(3)
-        .max(32)
-        .required(),
-      password: this.validator.string().min(8).max(32).required(),
-    };
-    const { error, value } = this.validator.validate(ctx.request.body, schema);
-    if (error) {
-      const message = this.utils
-        .getErrorMessage(error.details[0].path[0], error.details[0].message);
-      ctx.throw(400, message, { code: 'auth:param_error' });
-    }
-
-    const token = await this.authService.login(value.name, value.password);
+    const token =
+      await this.authService.login(ctx.state.reqParams.name, ctx.state.reqParams.password);
     ctx.body = { token };
   }
 }

@@ -44,15 +44,7 @@ module.exports = (options = {}) => {
 
     ctx.log.info('Request start');
 
-    try {
-      await next();
-    } catch (err) {
-      ctx.log.error(
-        { err, event: 'error' },
-        `Unhandled exception occured on the request: ${ctx.state.reqId}`,
-      );
-      throw err;
-    }
+    await next();
 
     ctx.responseTime = new Date() - startTime;
     ctx.log.info(

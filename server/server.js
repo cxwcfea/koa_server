@@ -27,8 +27,8 @@ app.use(compress());
 app.use(requestId());
 app.use(cors({ exposeHeaders: [REQUEST_ID_HEADER] }));
 app.use(scopePerRequest(diContainer));
-app.use(errorHandler());
 app.use(log({ logger }));
+app.use(errorHandler());
 
 const routeFiles = glob.sync(path.join(__dirname, 'components', '**/*.route.js'), {});
 routeFiles.forEach((file) => {
@@ -59,9 +59,9 @@ router.get('/api/error', (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-// function onError(err) {
-//   logger.error({ err, event: 'error' }, 'Unhandled exception occured');
-// }
-// app.on('error', onError);
+function onError(err) {
+  logger.error({ err, event: 'error' }, 'Unhandled exception occured');
+}
+app.on('error', onError);
 
 module.exports = app;
