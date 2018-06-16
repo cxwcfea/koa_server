@@ -13,7 +13,8 @@
       "error",
       "always"
     ],
-    "import/no-dynamic-require": "off"
+    "import/no-dynamic-require": "off",
+    "no-param-reassign": "off"
   },
   "env": {
     "node": true,

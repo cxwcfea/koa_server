@@ -18,7 +18,7 @@ function resSerializer(ctx = {}) {
     responseTime: `${ctx.responseTime}ms`,
     type: ctx.type,
     headers: (ctx.response || {}).headers,
-    body: ctx.body.code ? ctx.body : '',
+    body: ctx.body ? ctx.body : '',
   };
 }
 
@@ -57,7 +57,7 @@ module.exports = (options = {}) => {
     ctx.responseTime = new Date() - startTime;
     ctx.log.info(
       { req: ctx, res: ctx, event: 'response' },
-      'Request successfully',
+      'Request complete',
     );
   };
 };
