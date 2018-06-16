@@ -59,9 +59,9 @@ router.get('/api/error', (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-function onError(err) {
-  logger.error({ err, event: 'error' }, 'Unhandled exception occured');
-}
-app.on('error', onError);
+// function onError(err) {
+//   logger.error({ err, event: 'error' }, 'Unhandled exception occured');
+// }
+// app.on('error', onError);
 
 module.exports = app;

@@ -1,11 +1,11 @@
-const { getErrorMessage } = require('../../utils');
-
 class AuthController {
   constructor({
+    utils,
     logger,
     validator,
     authService,
   }) {
+    this.utils = utils;
     this.logger = logger;
     this.validator = validator;
     this.authService = authService;
@@ -23,7 +23,8 @@ class AuthController {
     };
     const { error, value } = this.validator.validate(ctx.request.body, schema);
     if (error) {
-      const message = getErrorMessage(error.details[0].path[0], error.details[0].message);
+      const message = this.utils
+        .getErrorMessage(error.details[0].path[0], error.details[0].message);
       ctx.throw(400, message, { code: 'auth:param_error' });
     }
 
@@ -43,7 +44,8 @@ class AuthController {
     };
     const { error, value } = this.validator.validate(ctx.request.body, schema);
     if (error) {
-      const message = getErrorMessage(error.details[0].path[0], error.details[0].message);
+      const message = this.utils
+        .getErrorMessage(error.details[0].path[0], error.details[0].message);
       ctx.throw(400, message, { code: 'auth:param_error' });
     }
 

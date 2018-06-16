@@ -1,10 +1,8 @@
-const ApiError = require('../../utils/apiError');
-const { getErrorMessage } = require('../../utils');
-
 class AuthService {
-  constructor({ db, logger }) {
+  constructor({ db, logger, utils }) {
     this.db = db;
     this.logger = logger;
+    this.utils = utils;
   }
 
   register(name, password) {
@@ -22,7 +20,7 @@ class AuthService {
         .then((result) => resolve(result[0].generateJwt()))
         .catch((error) => {
           if (error.name === 'SequelizeUniqueConstraintError') {
-            reject(new ApiError(getErrorMessage('userExists', 'Use already exists!'), 409, 'auth:use_exist'));
+            reject(new this.utils.ApiError(this.utils.getErrorMessage('userExists', 'Use already exists!'), 409, 'auth:use_exist'));
           } else {
             reject(error);
           }
@@ -40,14 +38,14 @@ class AuthService {
         })
         .then((account) => {
           if (!account) {
-            reject(new ApiError(getErrorMessage('userNotFound', 'User not found!'), 404, 'auth:no_user'));
+            reject(new this.utils.ApiError(this.utils.getErrorMessage('userNotFound', 'User not found!'), 404, 'auth:no_user'));
             return false;
           }
           return Promise.all([account.authenticate(password), account]);
         })
         .then((result) => {
           if (!result[0]) {
-            reject(new ApiError(getErrorMessage('incorrectPassword', 'Incorrect password!'), 403, 'auth:incorrect_passwd'));
+            reject(new this.utils.ApiError(this.utils.getErrorMessage('incorrectPassword', 'Incorrect password!'), 403, 'auth:incorrect_passwd'));
             return;
           }
           resolve(result[1].generateJwt());
