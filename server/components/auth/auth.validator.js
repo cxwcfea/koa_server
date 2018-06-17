@@ -9,7 +9,7 @@ class AuthValidator {
     this.validator = validator;
   }
 
-  nameAndPasswd(ctx, next) {
+  namePasswd(ctx, next) {
     const schema = {
       name: this.validator
         .string()
@@ -23,7 +23,7 @@ class AuthValidator {
     if (error) {
       const message = this.utils
         .getErrorMessage(error.details[0].path[0], error.details[0].message);
-      ctx.throw(400, message, { code: 'auth:param_error' });
+      ctx.throw(400, message, { code: 'auth:params_error' });
     }
     ctx.state.reqParams = value;
     return next();

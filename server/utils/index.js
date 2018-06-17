@@ -1,4 +1,9 @@
+const Sugar = require('sugar');
+const logger = require('./logger');
+
 exports.getErrorMessage = (type, defaultMessage) => {
+  logger.debug(`nomalize error msg for (${type}, ${defaultMessage})`);
+
   if (type === 'password') {
     return '请输入有效的密码';
   }
@@ -27,4 +32,12 @@ exports.getErrorMessage = (type, defaultMessage) => {
     return '您不是该共享组的创建者';
   }
   return defaultMessage;
+};
+
+exports.generateCaptcha = (codeLen) => {
+  let code = '';
+  for (let i = 0; i < codeLen; i += 1) {
+    code += Sugar.Number.random(0, 9);
+  }
+  return code;
 };

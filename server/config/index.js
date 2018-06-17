@@ -16,6 +16,10 @@ const config = {
     debug: process.env.SQL_DEBUG || true,
     syncDB: process.env.MYSQL_SYNC === 'true' || false,
   },
+  redis: {
+    host: process.env.REDIS_HOST || '',
+    passwd: process.env.REDIS_PASS || '',
+  },
   jwtSecret: process.env.JWT_SECRET || 'jwtSecret',
 };
 

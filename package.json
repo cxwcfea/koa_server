@@ -20,7 +20,9 @@
   "dependencies": {
     "awilix": "^3.0.8",
     "awilix-koa": "^2.1.1",
+    "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
+    "bluebird": "^3.5.1",
     "bunyan": "^1.8.12",
     "dotenv-safe": "^5.0.1",
     "glob": "^7.1.2",
@@ -34,7 +36,9 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "mysql2": "^1.5.3",
+    "redis": "^2.8.0",
     "sequelize": "^4.37.10",
+    "sugar": "^2.0.4",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
