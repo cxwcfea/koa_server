@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken');
+
+const config = require('../../config');
+
 class AuthService {
   constructor({ db, logger, utils }) {
     this.db = db;
@@ -51,6 +55,18 @@ class AuthService {
           resolve(result[1].generateJwt());
         })
         .catch((error) => reject(error.message));
+    });
+  }
+
+  isAuthorized(token) {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, config.jwtSecret, { issuer: config.jwtIssuer }, (err, payload) => {
+        if (err) {
+          reject(new this.utils.ApiError('Please login!', 401, 'auth:token_invalid'));
+        } else {
+          resolve({ profileId: payload.sub });
+        }
+      });
     });
   }
 }

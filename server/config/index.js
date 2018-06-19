@@ -21,6 +21,7 @@ const config = {
     passwd: process.env.REDIS_PASS || '',
   },
   jwtSecret: process.env.JWT_SECRET || 'jwtSecret',
+  jwtIssuer: process.env.JWT_ISSUER || 'iss.cxwcfea.net',
 };
 
 module.exports = config;

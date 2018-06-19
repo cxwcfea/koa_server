@@ -16,12 +16,16 @@ const orders = [
 ];
 
 class OrderService {
-  constructor({ logger }) {
+  constructor({ logger, currentUser }) {
     this.logger = logger;
+    this.currentUser = currentUser;
   }
 
   listOrders() {
     this.logger.debug('process in order service listOrders');
+    orders.forEach((item) => {
+      item.userId = this.currentUser.profileId;
+    });
     return orders;
   }
 }

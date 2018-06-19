@@ -1,4 +1,5 @@
 const db = require('../mysql');
+const ApiError = require('../../utils/apiError');
 
 const DataTypes = db.Sequelize;
 
@@ -18,6 +19,18 @@ const Profile = db.defineModel('profile', {
       profile.roles = ['user'];
     },
   },
+});
+
+/* class methods */
+Profile.loadInfo = (pid) => Profile.findOne({
+  where: {
+    profile_id: pid,
+  },
+}).then((instance) => {
+  if (!instance) {
+    throw new ApiError(`user ${pid} not found`);
+  }
+  return instance;
 });
 
 module.exports = Profile;

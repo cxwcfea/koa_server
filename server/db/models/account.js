@@ -45,7 +45,7 @@ Account.prototype.generateJwt = function generateJwt() {
   return jwt.sign({
     sub: this.profile_id,
     ltype: 0,
-    iss: config.name,
+    iss: config.jwtIssuer,
     iat: moment().unix(),
     exp: moment().add(3, 'days').unix(),
   }, config.jwtSecret);
