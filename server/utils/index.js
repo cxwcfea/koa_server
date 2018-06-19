@@ -1,5 +1,10 @@
+const { makeClassInvoker } = require('awilix-koa');
 const Sugar = require('sugar');
+
 const logger = require('./logger');
+const authController = require('../components/auth/auth.controller');
+
+exports.auth = makeClassInvoker(authController)('authenticate');
 
 exports.getErrorMessage = (type, defaultMessage) => {
   logger.debug(`nomalize error msg for (${type}, ${defaultMessage})`);
