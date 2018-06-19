@@ -35,5 +35,5 @@ Thumbs.db
 *.iml
 
 # General
-server/test.*
-test.*
+server/test*.*
+test*.*
