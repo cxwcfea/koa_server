@@ -38,6 +38,8 @@ class SmsService {
     return this.redis.setAsync(mobile, JSON.stringify({ captcha, count: 0 }), 'EX', 1800);
   }
 
+  // TODO: when multiple request for the same mobile sent in the same time,
+  //       this may cause race condition, should use message queue to handle the request.
   async verifyCaptcha(mobile, captcha) {
     const value = await this.redis.getAsync(mobile);
     if (!value) {

@@ -37,6 +37,11 @@ class AuthController {
     });
     return next();
   }
+
+  async updatePassword(ctx) {
+    await this.authService.updatePassword(ctx.state.reqParams.name, ctx.state.reqParams.password);
+    ctx.status = 201;
+  }
 }
 
 module.exports = AuthController;

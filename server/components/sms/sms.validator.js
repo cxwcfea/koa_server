@@ -3,12 +3,14 @@ class SmsValidator {
     utils,
     logger,
     validator,
+    smsService,
   }) {
     this.utils = utils;
     this.logger = logger;
     this.validator = validator;
+    this.smsService = smsService;
     this.mobileSchema = {
-      name: this.validator.string().trim().regex(this.utils.regex.mobile).required(),
+      mobile: this.validator.string().trim().regex(this.utils.regex.mobile).required(),
     };
   }
 
@@ -24,7 +26,7 @@ class SmsValidator {
     return next();
   }
 
-  mobileCaptcha(ctx, next) {
+  async verifyCaptcha(ctx, next) {
     const schema = {
       ...this.mobileSchema,
       captcha: this.validator.string().trim().regex(this.utils.regex.captcha).required(),
@@ -36,8 +38,11 @@ class SmsValidator {
         .getErrorMessage(error.details[0].path[0], error.details[0].message);
       ctx.throw(400, message, { code: 'auth:params_error' });
     }
+
     delete ctx.request.body.captcha;
     ctx.state.reqParams = value;
+
+    await this.smsService.verifyCaptcha(ctx.state.reqParams.mobile, ctx.state.reqParams.captcha);
     return next();
   }
 }

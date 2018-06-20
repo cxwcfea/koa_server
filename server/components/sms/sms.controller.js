@@ -7,7 +7,7 @@ class SmsController {
   }
 
   async sendCaptcha(ctx) {
-    const { name: mobile } = ctx.state.reqParams;
+    const { mobile } = ctx.state.reqParams;
     const captcha = this.generateCaptcha();
 
     await this.smsService.saveCaptcha(mobile, captcha);
@@ -16,11 +16,6 @@ class SmsController {
       throw new this.utils.ApiError(result.msg, 400, 'external:error');
     }
     ctx.status = 204;
-  }
-
-  async verifyCaptcha(ctx, next) {
-    await this.smsService.verifyCaptcha(ctx.state.reqParams.mobile, ctx.state.reqParams.captcha);
-    return next();
   }
 }
 

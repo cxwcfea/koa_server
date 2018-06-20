@@ -69,6 +69,25 @@ class AuthService {
       });
     });
   }
+
+  updatePassword(name, password) {
+    return new Promise((resolve, reject) => {
+      this.db.models.Account
+        .findOne({
+          where: {
+            name,
+          },
+        })
+        .then((account) => {
+          if (!account) {
+            reject(new this.utils.ApiError(this.utils.getErrorMessage('userNotFound', 'User not found!'), 404, 'auth:no_user'));
+            return false;
+          }
+          account.password = password;
+          return resolve(account.save());
+        });
+    });
+  }
 }
 
 module.exports = AuthService;
