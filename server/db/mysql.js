@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 
 const config = require('../config');
-const logger = require('../utils/logger');
 
 const sequelize = new Sequelize(
   config.mysql.db,
@@ -27,7 +26,7 @@ const sequelize = new Sequelize(
       max: 10,
       min: 0,
     },
-    logging: config.mysql.debug === 'true' ? logger.info : false,
+    logging: config.mysql.debug === 'true' ? console.log : false,
   },
 );
 
@@ -55,35 +54,27 @@ function defineModel(name, attributes, options) {
   attrs.created_at = {
     type: Sequelize.BIGINT,
     allowNull: false,
+    defaultValue: 0,
   };
   attrs.updated_at = {
     type: Sequelize.BIGINT,
     allowNull: false,
+    defaultValue: 0,
   };
   return sequelize.define(name, attrs, {
     ...options,
     version: true,
     freezeTableName: true,
-    /*
-    hooks: {
-      ...options.hooks,
-      beforeValidate(obj) {
-        const now = Date.now();
-        if (obj.isNewRecord) {
-          obj.created_at = now;
-        }
-        obj.updated_at = now;
-      },
-    },
-    */
   });
 }
 
-sequelize.addHook('beforeValidate', (obj) => {
+sequelize.addHook('beforeCreate', (obj) => {
   const now = Date.now();
-  if (obj.isNewRecord) {
-    obj.created_at = now;
-  }
+  obj.created_at = now;
+});
+
+sequelize.addHook('beforeUpdate', (obj) => {
+  const now = Date.now();
   obj.updated_at = now;
 });
 

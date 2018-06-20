@@ -1,5 +1,4 @@
 const { asValue } = require('awilix');
-const bunyan = require('bunyan');
 
 function reqSerializer(ctx = {}) {
   return {
@@ -41,7 +40,6 @@ module.exports = (options = {}) => {
     ctx.log.addSerializers({
       req: reqSerializer,
       res: resSerializer,
-      error: bunyan.stdSerializers.err,
     });
 
     ctx.log.info('Request start');

@@ -13,7 +13,7 @@ const config = {
     host: process.env.MYSQL_HOST || 'localhost',
     port: Number.parseInt(process.env.MYSQL_PORT, 10) || 3306,
     socketPath: process.env.MYSQL_SOCKET_PATH || '/tmp/mysql.sock',
-    debug: process.env.SQL_DEBUG || true,
+    debug: process.env.SQL_DEBUG || 'true',
     syncDB: process.env.MYSQL_SYNC === 'true' || false,
   },
   redis: {

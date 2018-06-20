@@ -33,8 +33,8 @@ exports.getErrorMessage = (type, defaultMessage) => {
   if (type === 'incorrectPassword') {
     return '密码不正确';
   }
-  if (type === 'notOwnerWhenRemoveGroupMember') {
-    return '您不是该共享组的创建者';
+  if (type === 'invalidParam') {
+    return '无效的字段';
   }
   return defaultMessage;
 };
