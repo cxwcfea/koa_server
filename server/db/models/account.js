@@ -4,14 +4,16 @@ const _ = require('lodash');
 const moment = require('moment');
 
 const db = require('../mysql');
+const regex = require('../../utils/regex');
 const config = require('../../config');
 
 const DataTypes = db.Sequelize;
 
 const Account = db.defineModel('account', {
   profile_id: { type: DataTypes.UUID, allowNull: true },
-  name: {
-    type: DataTypes.STRING(32),
+  mobile: {
+    type: DataTypes.STRING(11),
+    is: regex.mobile,
     unique: true,
   },
   password: {
@@ -44,6 +46,7 @@ Account.prototype.authenticate = function authenticate(password) {
 Account.prototype.generateJwt = function generateJwt() {
   return jwt.sign({
     sub: this.profile_id,
+    mobile: this.mobile,
     ltype: 0,
     iss: config.jwtIssuer,
     iat: moment().unix(),

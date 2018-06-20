@@ -9,12 +9,12 @@ class AuthService {
     this.utils = utils;
   }
 
-  register(name, password) {
+  register(mobile, password) {
     return new Promise((resolve, reject) => {
       this.db.sequelize.transaction((t) => this.db.models.Account
-        .create({ name, password }, { transaction: t })
+        .create({ mobile, password }, { transaction: t })
         .then((account) => {
-          const profile = this.db.models.Profile.build({ name });
+          const profile = this.db.models.Profile.build({ name: mobile, mobile, status: 1 });
           account.profile_id = profile.id;
           return Promise.all([
             account.save({ transaction: t }),
@@ -32,12 +32,12 @@ class AuthService {
     });
   }
 
-  login(name, password) {
+  login(mobile, password) {
     return new Promise((resolve, reject) => {
       this.db.models.Account
         .findOne({
           where: {
-            name,
+            mobile,
           },
         })
         .then((account) => {
@@ -64,18 +64,18 @@ class AuthService {
         if (err) {
           reject(new this.utils.ApiError('Please login!', 401, 'auth:token_invalid'));
         } else {
-          resolve({ profileId: payload.sub });
+          resolve({ profileId: payload.sub, mobile: payload.mobile });
         }
       });
     });
   }
 
-  updatePassword(name, password) {
+  updatePassword(mobile, password) {
     return new Promise((resolve, reject) => {
       this.db.models.Account
         .findOne({
           where: {
-            name,
+            mobile,
           },
         })
         .then((account) => {

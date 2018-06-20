@@ -11,7 +11,7 @@ module.exports = (app) => {
   const sms = makeClassInvoker(smsValidator);
 
   router.post('/register', sms('verifyCaptcha'), validate('mobilePasswd'), api('register'));
-  router.post('/login', validate('namePasswd'), api('login'));
+  router.post('/login', validate('mobilePasswd'), api('login'));
   router.post('/update-password', sms('verifyCaptcha'), validate('mobilePasswd'), api('updatePassword'));
 
   app.use(router.routes()).use(router.allowedMethods());

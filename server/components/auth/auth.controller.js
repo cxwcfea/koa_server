@@ -15,13 +15,13 @@ class AuthController {
 
   async register(ctx) {
     const token =
-      await this.authService.register(ctx.state.reqParams.name, ctx.state.reqParams.password);
+      await this.authService.register(ctx.state.reqParams.mobile, ctx.state.reqParams.password);
     ctx.body = { token };
   }
 
   async login(ctx) {
     const token =
-      await this.authService.login(ctx.state.reqParams.name, ctx.state.reqParams.password);
+      await this.authService.login(ctx.state.reqParams.mobile, ctx.state.reqParams.password);
     ctx.body = { token };
   }
 
@@ -39,7 +39,7 @@ class AuthController {
   }
 
   async updatePassword(ctx) {
-    await this.authService.updatePassword(ctx.state.reqParams.name, ctx.state.reqParams.password);
+    await this.authService.updatePassword(ctx.state.reqParams.mobile, ctx.state.reqParams.password);
     ctx.status = 201;
   }
 }

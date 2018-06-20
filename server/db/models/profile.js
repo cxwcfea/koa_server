@@ -14,6 +14,12 @@ const Profile = db.defineModel('profile', {
   roles: DataTypes.JSON,
   status: { type: DataTypes.INTEGER, defaultValue: 0 }, // 0 init, 1 active, 2 inactive
 }, {
+  indexes: [
+    {
+      unique: false,
+      fields: ['mobile'],
+    },
+  ],
   hooks: {
     beforeValidate(profile) {
       profile.roles = ['user'];
