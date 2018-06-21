@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js | bunyan",
     "lint": "eslint **/*.js --ignore-path .gitignore --ignore-pattern internals/scripts",
-    "test": "NODE_ENV=test mocha"
+    "test": "NODE_ENV=test mocha 'server/components/**/*.test.js' 'test/**/*.js'"
   },
   "keywords": [
     "koa",

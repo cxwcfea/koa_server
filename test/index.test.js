@@ -2,7 +2,7 @@ const supertest = require('supertest');
 const { expect } = require('chai');
 const server = require('../server/server');
 
-describe('Demo', () => {
+describe('index', () => {
   let request;
   let app;
 
@@ -12,18 +12,19 @@ describe('Demo', () => {
   });
 
   after((done) => {
+    server.cleanup();
     app.close(done);
   });
 
-  describe('GET /api/test', () => {
+  describe('GET /api/ping', () => {
     it('<200> should always return with the API server information', async () => {
       const res = await request
-        .get('/api/test')
+        .get('/api/ping')
         .expect('Content-Type', /json/)
         .expect(200);
 
-      const { name } = res.body;
-      expect(name).to.eq('Hello Koa');
+      const { message } = res.body;
+      expect(message).to.eq('Server is running');
     });
   });
 });

@@ -36,25 +36,8 @@ routeFiles.forEach((file) => {
   require(file)(app); // eslint-disable-line global-require
 });
 
-router.get('/test', (ctx) => {
-  // ctx.body = 'Hello Koa';
-  ctx.throw(500, 'server test error');
-});
-
-router.get('/api/test', (ctx) => {
-  ctx.log.info('This is a request');
-  ctx.body = { name: 'Hello Koa' };
-});
-
-router.post('/api/test', (ctx) => {
-  ctx.log.debug('post body', ctx.request.body);
-  ctx.log.debug('raw body', ctx.request.rawBody);
-  ctx.body = { name: 'good' };
-});
-
-router.get('/api/error', (ctx) => {
-  // ctx.body = { code: 1, msg: 'Hello Koa' };
-  ctx.throw(403, 'APIError', { code: 'auth:pass_error' });
+router.get('/api/ping', (ctx) => {
+  ctx.body = { message: 'Server is running' };
 });
 
 app.use(router.routes()).use(router.allowedMethods());
@@ -63,5 +46,24 @@ function onError(err) {
   logger.error({ err, event: 'error' }, 'Unhandled exception occured');
 }
 app.on('error', onError);
+
+function cleanup() {
+  logger.info('server cleanup');
+  diContainer.cradle.redis.quit();
+  diContainer.cradle.db.sequelize.close();
+}
+
+app.cleanup = cleanup;
+
+// restart
+process.once('SIGUSR2', () => {
+  cleanup();
+});
+
+// For app termination
+process.on('SIGINT', () => {
+  cleanup();
+  process.exit(0);
+});
 
 module.exports = app;

@@ -1,6 +1,11 @@
-require('dotenv-safe').config();
-
 const env = process.env.NODE_ENV || 'development';
+const options = { path: '../../.env' };
+if (env === 'test') {
+  options.path = '../../.env.test';
+}
+
+require('dotenv-safe').config(options);
+
 const config = {
   env,
   name: process.env.APP_NAME || 'koa-api-server',
@@ -13,7 +18,7 @@ const config = {
     host: process.env.MYSQL_HOST || 'localhost',
     port: Number.parseInt(process.env.MYSQL_PORT, 10) || 3306,
     socketPath: process.env.MYSQL_SOCKET_PATH || '/tmp/mysql.sock',
-    debug: process.env.SQL_DEBUG || 'true',
+    debug: process.env.SQL_DEBUG || false,
     syncDB: process.env.MYSQL_SYNC === 'true' || false,
   },
   redis: {

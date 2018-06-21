@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
 const config = require('../config');
+const logger = require('../utils/logger');
 
 const sequelize = new Sequelize(
   config.mysql.db,
@@ -79,11 +80,15 @@ sequelize.addHook('beforeUpdate', (obj) => {
 });
 
 if (config.mysql.syncDB === true) {
+  const option = {};
+  if (config.env === 'test') {
+    option.force = true;
+  }
   sequelize
-    .sync()
-    .then(() => console.log('mysql sync done'))
+    .sync(option)
+    .then(() => logger.info('mysql sync done'))
     .catch((err) => {
-      console.error('mysql sync error', err);
+      logger.error('mysql sync error', err);
     });
 }
 
