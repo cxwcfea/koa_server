@@ -1,7 +1,9 @@
+const path = require('path');
+
 const env = process.env.NODE_ENV || 'development';
-const options = { path: '../../.env' };
+const options = {};
 if (env === 'test') {
-  options.path = '../../.env.test';
+  options.path = path.join(__dirname, '..', '..', '.env.test');
 }
 
 require('dotenv-safe').config(options);
@@ -10,7 +12,7 @@ const config = {
   env,
   name: process.env.APP_NAME || 'koa-api-server',
   host: process.env.APP_HOST || '0.0.0.0',
-  port: process.env.APP_PORT || 3000,
+  port: Number.parseInt(process.env.APP_PORT, 10) || 3000,
   mysql: {
     db: process.env.MYSQL_DB || 'koa_api_dev',
     username: process.env.MYSQL_DB || 'root',

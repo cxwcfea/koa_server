@@ -56,14 +56,14 @@ function cleanup() {
 app.cleanup = cleanup;
 
 // restart
-process.once('SIGUSR2', () => {
-  cleanup();
-});
+// process.once('SIGUSR2', () => {
+//   cleanup();
+// });
 
 // For app termination
-process.on('SIGINT', () => {
-  cleanup();
-  process.exit(0);
-});
+// process.on('SIGINT', () => {
+//   cleanup();
+//   process.exit(0);
+// });
 
 module.exports = app;
