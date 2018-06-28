@@ -6,6 +6,7 @@ const compress = require('koa-compress');
 const Router = require('koa-router');
 const glob = require('glob');
 const path = require('path');
+const WebSocket = require('koa-websocket');
 
 const { REQUEST_ID_HEADER } = require('./constants');
 const diContainer = require('./utils/di');
@@ -56,14 +57,15 @@ function cleanup() {
 app.cleanup = cleanup;
 
 // restart
-process.once('SIGUSR2', () => {
-  cleanup();
-});
+// process.on('SIGUSR2', () => {
+//   cleanup();
+//   process.exit(0);
+// });
 
 // For app termination
-process.on('SIGINT', () => {
-  cleanup();
-  process.exit(0);
-});
+// process.on('SIGINT', () => {
+//   cleanup();
+//   process.exit(0);
+// });
 
-module.exports = app;
+module.exports = WebSocket(app);
