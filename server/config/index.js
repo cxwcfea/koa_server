@@ -15,7 +15,7 @@ const config = {
   port: Number.parseInt(process.env.APP_PORT, 10) || 3000,
   mysql: {
     db: process.env.MYSQL_DB || 'koa_api_dev',
-    username: process.env.MYSQL_DB || 'root',
+    username: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASS || '',
     host: process.env.MYSQL_HOST || 'localhost',
     port: Number.parseInt(process.env.MYSQL_PORT, 10) || 3306,
