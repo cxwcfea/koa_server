@@ -22,7 +22,7 @@ if (env === 'production') {
     stream: process.stderr,
     level: 'warn',
   });
-} else if (env === 'development') {
+} else {
   config.streams.push({
     type: 'stream',
     stream: process.stdout,

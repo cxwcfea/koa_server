@@ -19,7 +19,7 @@ const config = {
     password: process.env.MYSQL_PASS || '',
     host: process.env.MYSQL_HOST || 'localhost',
     port: Number.parseInt(process.env.MYSQL_PORT, 10) || 3306,
-    socketPath: process.env.MYSQL_SOCKET_PATH || '/tmp/mysql.sock',
+    socketPath: process.env.MYSQL_SOCKET_PATH,
     debug: process.env.SQL_DEBUG || false,
     syncDB: process.env.MYSQL_SYNC === 'true' || false,
   },
